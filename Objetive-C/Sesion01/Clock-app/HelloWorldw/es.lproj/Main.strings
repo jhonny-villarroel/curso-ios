@@ -1,0 +1,12 @@
+
+/* Class = "IBUILabel"; text = "Hello"; ObjectID = "EWK-lB-rRt"; */
+"EWK-lB-rRt.text" = "Hello";
+
+/* Class = "IBUIButton"; normalTitle = "Start"; ObjectID = "cVa-tQ-Zmb"; */
+"cVa-tQ-Zmb.normalTitle" = "Start";
+
+/* Class = "IBUIButton"; normalTitle = "Button"; ObjectID = "uVF-HW-7Ax"; */
+"uVF-HW-7Ax.normalTitle" = "Button";
+
+/* Class = "IBUIButton"; normalTitle = "Stop"; ObjectID = "zS0-g2-2pL"; */
+"zS0-g2-2pL.normalTitle" = "Stop";
