@@ -39,7 +39,16 @@ class ListTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         
     }
-
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        println("Variable..")
+        if (segue.identifier == "update")
+        {   println("NEXT...")
+            var seletedIndex = self.tableView.indexPathForSelectedRow()?.row
+            var selectedItem: NSManagedObject = myList[seletedIndex!] as NSManagedObject
+            let desti = segue.destinationViewController as ItemViewController
+            desti.currentItem = selectedItem
+        }
+    }
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -76,17 +85,24 @@ class ListTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        
+        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let contxt:NSManagedObjectContext = appDel.managedObjectContext!
+        
+        if editingStyle == UITableViewCellEditingStyle.Delete{
+            var deletedItem:NSManagedObject = myList[indexPath.row] as NSManagedObject
+            contxt.deleteObject(deletedItem)
+            myList.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+            
+        }
+        
+        contxt.save(nil);
     }
-    */
+
 
     /*
     // Override to support rearranging the table view.

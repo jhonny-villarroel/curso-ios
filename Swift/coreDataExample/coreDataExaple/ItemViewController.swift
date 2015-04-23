@@ -15,15 +15,22 @@ class ItemViewController: UIViewController {
     @IBOutlet weak var textFieldItem: UITextField!
     @IBOutlet weak var textFieldQuantity: UITextField!
     @IBOutlet weak var textFieldDescription: UITextField!
+    var currentItem: NSManagedObject!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        println(currentItem)
+        if(currentItem != nil){
+            textFieldQuantity.text = currentItem.valueForKey("quantity") as String
+            textFieldItem.text = currentItem.valueForKey("item") as String
+            textFieldDescription.text = currentItem.valueForKey("info") as String
+        }
         // Do any additional setup after loading the view, typically from a nib.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        
         // Dispose of any resources that can be recreated.
     }
 
@@ -33,14 +40,21 @@ class ItemViewController: UIViewController {
         let appDel: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         let contxt:NSManagedObjectContext = appDel.managedObjectContext!
         let en = NSEntityDescription.entityForName("List", inManagedObjectContext: contxt)
+        if (currentItem != nil){
+            currentItem.setValue(textFieldDescription.text, forKey: "info");
+            currentItem.setValue(textFieldQuantity.text, forKey: "quantity");
+            currentItem.setValue(textFieldItem.text, forKey: "item");
+        } else {
+            var newItem = List(entity:en!, insertIntoManagedObjectContext:contxt)
+            newItem.item = textFieldItem.text
+            newItem.quantity = textFieldQuantity.text
+            newItem.info = textFieldDescription.text
+            println(newItem)
+            
+        }
         
-        var newItem = List(entity:en!, insertIntoManagedObjectContext:contxt)
-        newItem.item="testtttt"
-        newItem.quantity="test2"
-        newItem.info="test3"
         contxt.save(nil)
-        println(newItem)
-        
+        self.navigationController?.popToRootViewControllerAnimated(true)
     // reference Moc
     // Create instance of pur data model and initialize
         // Map our properties
